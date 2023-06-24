@@ -8,11 +8,11 @@ fastapi = "*"
 aiofiles = "*"
 python-multipart = "*"
 python-magic = "*"
+httpx = "*"
 
 [dev-packages]
 uvicorn = "*"
 requests = "*"
-httpx = "*"
 
 [requires]
 python_version = "3.10"
