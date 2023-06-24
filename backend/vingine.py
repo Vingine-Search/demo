@@ -58,5 +58,5 @@ class Vingine:
 
     async def search(self, query: str):
         """Returns the search results for `query`."""
-        response = await self.client.get(self.url + '/status', params={'query': query})
+        response = await self.client.get(self.url + '/search', params={'query': query})
         return response.json()
