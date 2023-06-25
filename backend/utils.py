@@ -9,11 +9,11 @@ def get_random_path():
     id = str(uuid.uuid4())
     return id, os.path.join(constants.STORAGE, id) + ".mp4"
 
-def get_video_path(id: str) -> str:
+async def get_video_path(id: str) -> str:
     """Returns the filesystem path of the video with the given `id`."""
     path = os.path.join(constants.STORAGE, id) + ".mp4"
     if not os.path.exists(path):
-        raise RuntimeError("Video not found.")
+        raise RuntimeError(f"Video with ID='{id}' was not found.")
     return path
 
 def list_videos() -> list:

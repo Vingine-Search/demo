@@ -37,32 +37,31 @@ async def upload(video: UploadFile, analysis: str, name: str):
         os.remove(path)
         raise HTTPException(400, str(e))
 
-def assert_video_exists(id: str) -> str:
+async def wrap_exception(fn, args, code):
     try:
-        path = utils.get_video_path(id)
+        return await fn(*args)
     except Exception as e:
-        raise HTTPException(404, str(e))
-    return path
+        raise HTTPException(code, str(type(e)) + ": " + str(e))
 
 @api.get("/download/{id}")
 async def download(id: str):
     """Sends the playable video to the client."""
-    path = assert_video_exists(id)
+    path = await wrap_exception(utils.get_video_path, (id,), 404)
     return FileResponse(path)
 
 @api.get("/status/{id}")
 async def status(id: str):
     """Returns the analysis status of a specific video."""
-    assert_video_exists(id)
-    return await vingine.status(id)
+    await wrap_exception(utils.get_video_path, (id,), 404)
+    return await wrap_exception(vingine.status, (id,), 500)
 
 @api.get("/info/{id}")
 async def info(id: str):
     """Gets the video info (transcript, segments, etc...)."""
-    assert_video_exists(id)
-    return await vingine.info(id)
+    await wrap_exception(utils.get_video_path, (id,), 404)
+    return await wrap_exception(vingine.info, (id,), 500)
 
 @api.get("/search")
 async def search(q: str):
     """Invokes Vingine."""
-    return await vingine.search(q)
+    return await wrap_exception(vingine.search, (q,), 500)

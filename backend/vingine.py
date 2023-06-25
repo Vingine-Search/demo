@@ -1,3 +1,4 @@
+import os
 import httpx
 import magic
 import asyncio
@@ -8,11 +9,12 @@ class Vingine:
 
     def __init__(self, service_url: str):
         self.url = service_url.strip('/')
-        self.client = httpx.AsyncClient()
         self.magic = magic.Magic(True)
+        self.client = httpx.AsyncClient()
         self.on_transient = {}
 
     def analyse(self, id: str, video_path: str, name: str, analysis_type: str):
+        """Creates an asynchronous task that sends the video to Vingine."""
         mime = self.magic.from_file(video_path)
         if mime != "video/mp4":
             raise RuntimeError(f"Only MP4 files are accepted for now. '{mime}' was provided.")
@@ -30,7 +32,9 @@ class Vingine:
             self.on_transient.pop(id)
         else:
             # Cache this failure (don't pop) and replace the task handle with the error we got from Vingine.
-            self.on_transient[id] = (name, response.text)
+            self.on_transient[id] = (name, response.json().get('detail'))
+            # Remove the lengthy video but keep its ID on the filesystem.
+            open(video_path, 'w')
 
     async def status(self, id: str):
         """Gets the analysis status of the video with `id`. It's either still being sent to Vingine or is fully sent.
@@ -42,21 +46,27 @@ class Vingine:
         if name is not None:
             # If `task` is a string, that means Vingine failed to analyse the video and that's it's response.
             if isinstance(task, str):
-                return f"Vingine failed to analyse {name} because: {task}."
+                raise RuntimeError(f"Vingine failed to analyse {name} because: {task}.")
             return f"{name} is currently being sent to Vingine."
         # Ask Vingine about the status of this video ID.
         else:
             response = await self.client.get(self.url + '/status', params={'id': id})
-            return response.text
+            if response.is_error:
+                raise RuntimeError(f"Vingine Video Status Error: {response.json().get('detail')}")
+            return response.json()
 
     async def info(self, id: str):
         """Returns the analysis data for video with `id`."""
         # NOTE: Typically the frontend will ask about the info for `id` when it appears on a search result.
         # So we are sure we actually have/Vingine has this `id`.
         response = await self.client.get(self.url + '/info', params={'id': id})
+        if response.is_error:
+            raise RuntimeError(f"Vingine Video Info Error: {response.json().get('detail')}")
         return response.json()
 
     async def search(self, query: str):
         """Returns the search results for `query`."""
         response = await self.client.get(self.url + '/search', params={'query': query})
+        if response.is_error:
+            raise RuntimeError(f"Vingine Search Error: {response.json().get('detail')}")
         return response.json()
