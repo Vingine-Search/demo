@@ -28,12 +28,11 @@ class Vingine:
         response = await self.client.post(self.url + '/analyse',
                                           files={'video': open(video_path, 'rb')},
                                           params={'id': id, 'name': name, 'analysis_type': analysis_type})
-        if not response.is_error:
-            self.on_transient.pop(id)
-        else:
-            # Cache this failure (don't pop) and replace the task handle with the error we got from Vingine.
-            self.on_transient[id] = (name, response.json().get('detail'))
-            # Remove the lengthy video but keep its ID on the filesystem.
+        self.on_transient.pop(id)
+        if response.is_error:
+            # Remove the video to not waste space.
+            # NOTE: We keep its ID on the filesystem to allow it to be queried for status.
+            # This is to distinguish between 404s and Vingine induced errors.
             open(video_path, 'w')
 
     async def status(self, id: str):
@@ -41,19 +40,15 @@ class Vingine:
         If the video is fully sent, Vingine might still be doing analysis on it, thus we ask Vingine about its status
         instead.
         """
-        name, task = self.on_transient.get(id, (None, None))
-        # Video is either still being sent or Vingine failed to analyse it.
+        name, _ = self.on_transient.get(id, (None, None))
+        # Video may be still being sent.
         if name is not None:
-            # If `task` is a string, that means Vingine failed to analyse the video and that's it's response.
-            if isinstance(task, str):
-                raise RuntimeError(f"Vingine failed to analyse {name} because: {task}.")
             return f"{name} is currently being sent to Vingine."
         # Ask Vingine about the status of this video ID.
-        else:
-            response = await self.client.get(self.url + '/status', params={'id': id})
-            if response.is_error:
-                raise RuntimeError(f"Vingine Video Status Error: {response.json().get('detail')}")
-            return response.json()
+        response = await self.client.get(self.url + '/status', params={'id': id})
+        if response.is_error:
+            raise RuntimeError(f"Vingine Video Status Error: {response.json().get('detail')}")
+        return response.json()
 
     async def info(self, id: str):
         """Returns the analysis data for video with `id`."""
