@@ -9,10 +9,10 @@ aiofiles = "*"
 python-multipart = "*"
 python-magic = "*"
 httpx = "*"
+baize = "*"
 
 [dev-packages]
 uvicorn = "*"
-requests = "*"
 
 [requires]
 python_version = "3.10"
