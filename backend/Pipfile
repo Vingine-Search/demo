@@ -10,6 +10,7 @@ python-multipart = "*"
 python-magic = "*"
 httpx = "*"
 baize = "*"
+opencv-python = "*"
 
 [dev-packages]
 uvicorn = "*"

@@ -36,6 +36,7 @@ async def upload(video: UploadFile, analysis: str, title: str):
         # Read the video on chunks to not blow up the memory.
         while contents := await video.read(256 * 1024):
             await file.write(contents)
+        utils.store_thumbnail(path)
     try:
         vingine.analyse(id, path, title, analysis)
         # Return the id of the video for the frontend to query its analysis status.
@@ -48,6 +49,11 @@ async def upload(video: UploadFile, analysis: str, title: str):
 async def download(id: str):
     """Sends the playable video to the client."""
     path = await wrap_exception(utils.get_video_path, (id,), 404)
+    return FileResponse(path)
+
+@api.get("/thumbnail/{id}")
+async def thumbnail(id: str):
+    path = await wrap_exception(utils.get_thumbnail_path, (id,), 404)
     return FileResponse(path)
 
 @api.get("/status/{id}")
