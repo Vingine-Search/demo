@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+fastapi = "*"
+aiofiles = "*"
+python-multipart = "*"
+python-magic = "*"
+httpx = "*"
+baize = "*"
+opencv-python = "*"
+
+[dev-packages]
+uvicorn = "*"
+
+[requires]
+python_version = "3.10"
