@@ -27,5 +27,37 @@
             "segment_type": "scene" ,
             "segment_title": "Vue"
         }
+    ],
+    "info":[
+        {
+            "id": 1,
+            "title":" Vingine",
+            "duration": 300,
+            "scene_segments": [2,3,5,6],
+            "topic_segments": [3,4,6,7],
+            "asr": "what should  i do",
+            "dsc": "argument",
+            "vtt": "what should  i do"
+        },
+        {
+            "id": 2,
+            "title":" Vingine",
+            "duration": 300,
+            "scene_segments": [2,3,5,6],
+            "topic_segments": [3,4,6,7],
+            "asr": "what should  i do",
+            "dsc": "argument",
+            "vtt": "what should  i do"
+        },
+        {
+            "id": 3,
+            "title":" Vingine",
+            "duration": 300,
+            "scene_segments": [2,3,5,6],
+            "topic_segments": [3,4,6,7],
+            "asr": "what should  i do",
+            "dsc": "argument",
+            "vtt": "what should  i do"
+        }
     ]
 }

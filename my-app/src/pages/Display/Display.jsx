@@ -24,15 +24,17 @@ const Display = () => {
   const [videoUrl,setVideoUrl] = useState([]);
   const [videoData,setVideoData] = useState([]);
   const videos = useSelector(state => state.searchResults);
-  const query = useLocation().search;
+  const location = useLocation()
+  const query = location.search;
   useEffect(() => {
     console.log("query :", query);
-    console.log("query yyyyyyyyy:",query.q)
     setVideoUrl(query)
     const fetchVideoData = async () => {
       try {
-        console.log('jjjjjjjj')
-          axios.get(`${baseURL}/info`).then((response) => {
+        const searchParams = new URLSearchParams(query);
+        const id = searchParams.get('q');
+          axios.get(`${baseURL}/info/${id}`).then((response) => {
+            console.log("responseeee",response.data)
             setVideoData(response.data);
             console.log(response.data);
           });

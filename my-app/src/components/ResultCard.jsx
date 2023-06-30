@@ -13,7 +13,7 @@ const Img = styled('img')({
   height: '100%',
   borderRadius:'5%',
 });
-export default function ComplexGrid({videoImg,videoUrl,videoId}){
+export default function ComplexGrid({videoImg,videoId}){
     const navigate = useNavigate();
     const handleClick = (e) => {
       navigate(`/display?q=${videoId}`);
