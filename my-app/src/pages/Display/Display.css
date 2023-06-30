@@ -1,0 +1,28 @@
+.videoTitle{
+    margin: 20px 0px;
+}
+.videoData{
+    background-color: rgba(255, 255, 255, 0.708);
+    border: 2px solid black;
+    border-radius: 5px;
+    height: 100vh;
+}
+.rec-parent{
+    overflow-x: scroll;
+    flex-grow: 1;
+}
+.recommended{
+    white-space:nowrap;
+    display:inline-block;
+}
+.v-t{
+    text-align: left;
+
+}
+.s-t{
+text-align: center;
+color: darkturquoise;
+font-family:monospace;
+font-style:italic;
+margin-top: 20px !important;
+}

@@ -7,7 +7,6 @@ import { baseURL } from '../../api';
 import ComplexGrid from '../../components/ResultCard';
 import './Results.css';
 import { useSelector } from 'react-redux';
-
 import {
   fetchSearchVideos
 } from "../../redux/videoSlice.js";

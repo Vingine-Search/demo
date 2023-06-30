@@ -2,14 +2,18 @@
 import { Grid } from '@mui/material';
 import './Display.css'
 import MediaControlCard from '../../components/DisplayCom';
+import BasicTabs from '../../components/VideoDataBar'
 import React from 'react'
 import ReactPlayer from 'react-player'
 import { useState,useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import Navbarlocal from '../../components/LocalNav';
 import { useLocation } from 'react-router-dom';
+import Typography from '@mui/material/Typography';
 import axios from 'axios';
 import { baseURL } from '../../api';
 import { useSelector } from 'react-redux';
+import Recom from '../../components/Recom';
 
 const images = [
   { id: 1, imgSource: 'https://media.istockphoto.com/id/1174818077/photo/mosque-and-pyramids.jpg?s=612x612&w=0&k=20&c=kewLXiirLBe_QOeAQ2MPNFk8S4oxcTFt0AMPQ4mAXKY=' },
@@ -48,22 +52,40 @@ const Display = () => {
     fetchVideoData();
   }, [query]);
   return (
+  // <Grid container spacing={2} columns={12} className='main-grid' justify="center">
+  //       <Grid item  sm={12} md={8}>
+  //          <ReactPlayer 
+  //          controls = 'true'
+  //          width = '100%'
+  //          height='300px'
+  //          url='https://www.youtube.com/watch?v=ysz5S6PUM-U'/>
+  //       </Grid>
+  //       <Grid item sm={12} md={4}>
+  //       <Grid container spacing={2} columns={12}>
+  //       {searchVideos.map((video) => (
+  //       <Grid item  sm={12} md={12} key={video.id}>
+  //         <MediaControlCard videoImg={video.thumbnail} />
+  //       </Grid>
+  //     ))}
+  //       </Grid>
+  //       </Grid>
+  //   </Grid>
   <Grid container spacing={2} columns={12} className='main-grid' justify="center">
-        <Grid item  sm={12} md={8}>
-           <ReactPlayer 
+        <Grid item sm={12} md={6}>
+        <ReactPlayer 
            controls = 'true'
-           width = '95%'
-           height='400px'
+           width = '100%'
+           height='300px'
            url='https://www.youtube.com/watch?v=ysz5S6PUM-U'/>
+           <Typography gutterBottom variant="h5" component="div" className='s-t'>
+           Search Inside The Video
+          </Typography>
+          <Navbarlocal/>
         </Grid>
-        <Grid item sm={12} md={4}>
-        <Grid container spacing={2} columns={12}>
-        {searchVideos.map((video) => (
-        <Grid item  sm={12} md={12} key={video.id}>
-          <MediaControlCard videoImg={video.thumbnail} />
-        </Grid>
-      ))}
-        </Grid>
+        <Grid item sm={12} md={6} >
+        <div  className='videoData'>
+        <BasicTabs/>
+        </div>
         </Grid>
     </Grid>
   );

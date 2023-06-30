@@ -1,4 +1,3 @@
-
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -24,7 +23,7 @@ const size = {
     desktop: `(max-width: ${size.desktop})`,
     desktopL: `(max-width: ${size.desktop})`,
   };
-  const Navbar = () => {
+  const Navbarlocal = () => {
     const Container_style = {
       position: 'sticky',
       top: 0,
@@ -90,15 +89,10 @@ const size = {
               onClick={handleSearch}
             />
           </div>
-            <div
-              style={{ display: "flex", alignItems: "center" }}
-            >
-            <img className="Avatar_style" alt= ""  />
-            </div>
           {isUploadOpen && <Upload setOpen={setIsUploadOpen} />}
         </div>
       </div>
     );
   };
   
-  export default Navbar;
+  export default Navbarlocal;
