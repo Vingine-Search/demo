@@ -1,8 +1,17 @@
 // import MultiActionAreaCard from '../../components/VideoCard'
 import { Grid } from '@mui/material';
-import './Results.css'
+import axios from "axios";
+import { useLocation } from "react-router-dom";
+import { useState,useEffect } from 'react';
+import { baseURL } from '../../api';
 import ComplexGrid from '../../components/ResultCard';
+import './Results.css';
 
+import {
+  fetchSearchVideos
+} from "../../redux/videoSlice.js";
+import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 const images = [
   { id: 1, imgSource: 'https://media.istockphoto.com/id/1174818077/photo/mosque-and-pyramids.jpg?s=612x612&w=0&k=20&c=kewLXiirLBe_QOeAQ2MPNFk8S4oxcTFt0AMPQ4mAXKY=' },
   { id: 2, imgSource: 'https://media.istockphoto.com/id/1180786967/photo/panorama-of-cairo.jpg?s=612x612&w=0&k=20&c=Wk3c7snqjGcA56QMA3JUfd_erGcUeDeDTn99T1tjQyQ=' },
@@ -11,12 +20,35 @@ const images = [
 ];
 
 const Results = () => {
-  // const [videos] = useState([]);
+  const [videos, setVideos] = useState([]);
+  const query = useLocation().search;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    console.log("query :", query);
+    const fetchVideos = async () => {
+      try {
+        console.log('jjjjjjjj')
+          axios.get(`${baseURL}/search`).then((response) => {
+            let videos_res = response.data
+            setVideos(videos_res);
+            console.log(videos_res);
+            dispatch(
+              fetchSearchVideos({
+                searchVideos:videos_res
+              }))
+          });
+      } catch (error) {
+        console.log(error.response.data);
+      }
+    };
+    fetchVideos();
+  }, [query]);
+
   return (
   <Grid container spacing={2} columns={12} className='main-grid' justify="center">
   {images.map((image) => (
         <Grid item  xs={12} md={12} key={image.id}>
-          <ComplexGrid videoImg={image.imgSource}/>
+          <ComplexGrid videoImg={image.imgSource} videoId={image.id}/>
         </Grid>
       ))}
 </Grid>

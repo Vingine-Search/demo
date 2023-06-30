@@ -6,10 +6,12 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Display from "./pages/Display/Display";
 import './App.css'
 
+
 function App() {
   // const [darkMode, setDarkMode] = useState(true);
   return (
     // <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+    
     <Router>
       <div className='app-main'>
         <Navbar />

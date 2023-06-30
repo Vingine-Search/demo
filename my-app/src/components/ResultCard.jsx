@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
+import { useNavigate } from 'react-router-dom';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
@@ -12,8 +13,11 @@ const Img = styled('img')({
   height: '100%',
   borderRadius:'5%',
 });
-export default function ComplexGrid({videoImg,videoUrl}){
-
+export default function ComplexGrid({videoImg,videoUrl,videoId}){
+    const navigate = useNavigate();
+    const handleClick = (e) => {
+      navigate(`/display?q=${videoId}`);
+    };
   return (
     <Paper
       sx={{
@@ -27,8 +31,10 @@ export default function ComplexGrid({videoImg,videoUrl}){
     >
       <Grid container spacing={2}>
         <Grid item>
-          <ButtonBase sx={{ width: 250, height: 180 }}>
-            <Img alt="complex" src={videoImg} />
+          <ButtonBase sx={{ width: 250, height: 180 }}
+          onClick={(e) => handleClick()}
+          >
+            <Img alt="complex" src={videoImg}  />
           </ButtonBase>
         </Grid>
         <Grid item xs={12} sm container>

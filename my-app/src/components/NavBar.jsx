@@ -1,18 +1,18 @@
 
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-// import { useNavigate } from "react-router-dom";
-  import { useState } from "react";
-  import Upload from "./Upload.jsx";
-  import '../css/NavBar.css'
-  const size = {
-    mobileS: "320px",
-    mobileM: "375px",
-    mobileL: "425px",
-    tablet: "768px",
-    laptop: "1024px",
-    laptopL: "1440px",
-    desktop: "2560px",
-  };
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import Upload from "./Upload.jsx";
+import '../css/NavBar.css'
+const size = {
+  mobileS: "320px",
+  mobileM: "375px",
+  mobileL: "425px",
+  tablet: "768px",
+  laptop: "1024px",
+  laptopL: "1440px",
+  desktop: "2560px",
+};
   
   export const device = {
     mobileS: `(max-width: ${size.mobileS})`,
@@ -66,31 +66,15 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
       },
     },
   }
-
-
-
-
-    // const navigate = useNavigate();
+     const navigate = useNavigate();
+    // const history = useHistory()
     const [isUploadOpen, setIsUploadOpen] = useState(false);
     const [query, setQuery] = useState("");
 
     const handleSearch = (e) => {
       if (!query) return;
-      // navigate(`/search?q=${query}`);
+     navigate(`/results?q=${query}`)
     };
-    const handleOpenSidebar = (e) => {
-      // e.preventDefault();
-      console.log("open sidebar");
-      const bar = document.getElementById("mySidenav");
-      console.log(bar);
-      if (bar.style.width === "250px") {
-        bar.style.width = "0";
-      } else {
-        bar.style.width = "250px";
-      }
-      // document.getElementById("main").style.marginLeft = "250px";
-    };
-  
     return (
       <div  style={Container_style}>
         <div style={Wrapper_style}>
@@ -100,7 +84,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
               placeholder="Search Deep Inside"
               onChange={(e) => setQuery(e.target.value)}
               value={query}
-              onKeyDown={(e) => e.keyCode === 13 && handleSearch()}
+              onKeyDown={(e) => e.key === 'Enter'  && handleSearch()}
             />
             <SearchOutlinedIcon
               onClick={handleSearch}
@@ -109,7 +93,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
             <div
               style={{ display: "flex", alignItems: "center" }}
             >
-            <img className="Avatar_style" alt= "" onClick={() => handleOpenSidebar()} />
+            <img className="Avatar_style" alt= ""  />
             </div>
           {isUploadOpen && <Upload setOpen={setIsUploadOpen} />}
         </div>

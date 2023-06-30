@@ -20,10 +20,10 @@ export default function MultiActionAreaCard({videoImg}) {
             Learn Vue
           </Typography>
           <Grid container spacing={1} columns={12}>
-      <Grid item xs={4}  >
+      <Grid item xs={5}  >
       <h4>100K views • </h4>
       </Grid>
-      <Grid item xs={8}  >
+      <Grid item xs={7}  >
       <h4>1 day ago</h4>
       </Grid>
     </Grid>

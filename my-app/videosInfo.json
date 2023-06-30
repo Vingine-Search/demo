@@ -1,0 +1,31 @@
+{
+    "search": [
+        {
+            "id": 1,
+            "video_title": "Learn Vue",
+            "from": 2,
+            "to": 3,
+            "duration": 700,
+            "segment_type": "scene" ,
+            "segment_title": "Vue"
+        },
+        {
+            "id": 2,
+            "video_title": "Learn Vue",
+            "from": 2,
+            "to": 3,
+            "duration": 700,
+            "segment_type": "scene" ,
+            "segment_title": "Vue"
+        },
+        {
+            "id": 3,
+            "video_title": "Learn Vue",
+            "from": 2,
+            "to": 3,
+            "duration": 700,
+            "segment_type": "scene" ,
+            "segment_title": "Vue"
+        }
+    ]
+}

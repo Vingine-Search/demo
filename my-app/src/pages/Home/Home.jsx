@@ -16,11 +16,11 @@ const images = [
 ];
 
 const Home = () => {
-  // const [videos] = useState([]);
+
   return (
   <Grid container spacing={2} columns={12} className='main-grid' justify="center">
   {images.map((image) => (
-        <Grid item  xs={12} md={4} key={image.id}>
+        <Grid item  xs={12} md={3} key={image.id}>
           <MultiActionAreaCard videoImg={image.imgSource}/>
         </Grid>
       ))}
