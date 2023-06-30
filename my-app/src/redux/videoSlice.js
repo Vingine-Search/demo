@@ -1,11 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 const initialState = {
   currentVideo: null,
   loading: false,
   searchVideos:[],
 }
-
 export const videoSlice = createSlice({
     name: "video",
     initialState,
@@ -14,18 +12,22 @@ export const videoSlice = createSlice({
         state = { ...initialState };
         state.loading = true;
         console.log(state);
+        return state
       },
       fetchSearchVideos: (state,action) => {
         state = { ...initialState };
         state.searchVideos = action.payload.searchVideos
         console.log(state);
+        return state
       },
       fetchVideoInfoSuccess: (state, action) => {
         state.loading = false;
         state.currentVideo = action.payload.currentVideo;
+        return state
       },
       fetchVideoInfoFailure: (state) => {
         state = { ...initialState, error: true };
+        return state
       }}});
 
 

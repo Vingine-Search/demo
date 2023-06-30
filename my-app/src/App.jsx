@@ -5,8 +5,6 @@ import Results from './pages/Results/Results';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Display from "./pages/Display/Display";
 import './App.css'
-
-
 function App() {
   // const [darkMode, setDarkMode] = useState(true);
   return (

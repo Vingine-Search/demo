@@ -6,6 +6,7 @@ import { useState,useEffect } from 'react';
 import { baseURL } from '../../api';
 import ComplexGrid from '../../components/ResultCard';
 import './Results.css';
+import { useSelector } from 'react-redux';
 
 import {
   fetchSearchVideos
@@ -36,6 +37,7 @@ const Results = () => {
               fetchSearchVideos({
                 searchVideos:videos_res
               }))
+              setVideos(videos_res)
           });
       } catch (error) {
         console.log(error.response.data);
@@ -46,9 +48,9 @@ const Results = () => {
 
   return (
   <Grid container spacing={2} columns={12} className='main-grid' justify="center">
-  {images.map((image) => (
-        <Grid item  xs={12} md={12} key={image.id}>
-          <ComplexGrid videoImg={image.imgSource} videoId={image.id}/>
+  {videos.map((video) => (
+        <Grid item  xs={12} md={12} key={video.id}>
+          <ComplexGrid videoImg={video.thumbnail} videoId={video.id}/>
         </Grid>
       ))}
 </Grid>

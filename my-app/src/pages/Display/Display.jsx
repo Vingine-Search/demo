@@ -5,6 +5,7 @@ import MediaControlCard from '../../components/DisplayCom';
 import React from 'react'
 import ReactPlayer from 'react-player'
 import { useState,useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { baseURL } from '../../api';
@@ -21,21 +22,23 @@ const images = [
   { id: 8, imgSource: 'https://media.gettyimages.com/id/171450925/photo/city-skyline-cairo-at-dusk.jpg?s=612x612&w=gi&k=20&c=3G0g1WhZnicanIKudZx6I46SNR9YPyiimUUAkeUb0nU=' }
 ];
 const Display = () => {
-  const [videoUrl,setVideoUrl] = useState([]);
-  const [videoData,setVideoData] = useState([]);
-  const videos = useSelector(state => state.searchResults);
-  const location = useLocation()
+  // const [videoUrl,setVideoUrl] = useState([]);
+  // const [videoData,setVideoData] = useState([]);
+  const searchVideos = useSelector(state =>state.video.searchVideos);
+  const location = useLocation();
   const query = location.search;
+  // const dispatch = useDispatch()
   useEffect(() => {
     console.log("query :", query);
-    setVideoUrl(query)
+    // setVideoUrl(query)
     const fetchVideoData = async () => {
       try {
+        console.log("searchVideos",searchVideos)
         const searchParams = new URLSearchParams(query);
         const id = searchParams.get('q');
           axios.get(`${baseURL}/info/${id}`).then((response) => {
             console.log("responseeee",response.data)
-            setVideoData(response.data);
+            // setVideoData(response.data);
             console.log(response.data);
           });
       } catch (error) {
@@ -55,9 +58,9 @@ const Display = () => {
         </Grid>
         <Grid item sm={12} md={4}>
         <Grid container spacing={2} columns={12}>
-        {images.map((image) => (
-        <Grid item  sm={12} md={12} key={image.id}>
-          <MediaControlCard videoImg={image.imgSource} />
+        {searchVideos.map((video) => (
+        <Grid item  sm={12} md={12} key={video.id}>
+          <MediaControlCard videoImg={video.thumbnail} />
         </Grid>
       ))}
         </Grid>
