@@ -1,8 +1,24 @@
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { useNavigate } from "react-router-dom";
+import { useMemo } from "react";
 import { useState } from "react";
 import Upload from "./Upload.jsx";
-import '../css/NavBar.css'
+import { Typography } from "@mui/material";
+import '../css/NavBar.css';
+import { useSelector } from "react-redux";
+function searchWordInSentences(sentences, word,asr) {
+    const result = [];
+    console.log(sentences)
+    for (let i = 0; i < sentences?.length; i++) {
+      if (sentences[i].indexOf(word) !== -1) {
+        if (asr === 1)
+        result.push(i+1);
+        else  result.push((i+1)*5);
+      }
+    }
+    console.log(result)
+    return result;
+  }
 const size = {
   mobileS: "320px",
   mobileM: "375px",
@@ -24,16 +40,18 @@ const size = {
     desktopL: `(max-width: ${size.desktop})`,
   };
   const Navbarlocal = () => {
+
+
     const Container_style = {
       position: 'sticky',
       top: 0,
       zIndex: 1,
       // backgroundColor:'#181818',
       // backgroundColor: 'rgb(236, 251, 251)',
-      backgroundColor: 'rgb(255, 253, 237)',
+    //   backgroundColor: 'rgb(255, 253, 237)',
+    backgroundColor:'rgb(243, 252, 252)',
       height: '80px',
     };
-
     const Wrapper_style = {
       display: 'flex',
       justifyContent: 'space-evenly',
@@ -48,7 +66,6 @@ const size = {
         },
       },
   };
-
   const Search_style = {
     width: '60%',
     display: 'flex',
@@ -64,17 +81,35 @@ const size = {
         width: 'auto',
       },
     },
-  }
-     const navigate = useNavigate();
-    // const history = useHistory()
-    const [isUploadOpen, setIsUploadOpen] = useState(false);
-    const [query, setQuery] = useState("");
+  } ;
 
+
+    const currentVideo = useSelector(state=> state.video)
+    const seconds = currentVideo?.currentVideo?.duration;
+    const [query, setQuery] = useState("");
+    const [resultsAsr,setResultsAsr] = useState([]);
+    const [resultsDsc,setResultsDsc] = useState([]);
+    const getBarColorDsc = useMemo(() => {
+        return (second) => {
+          return resultsDsc.includes(second) ? "green" : "rgb(255, 255, 255)";
+        };
+      }, [resultsDsc]);
+      const getBarColorAsr = useMemo(() => {
+        return (second) => {
+          return resultsAsr.includes(second) ? "green" : "rgb(255, 255, 255)";
+        };
+      }, [resultsAsr]);
     const handleSearch = (e) => {
       if (!query) return;
-     navigate(`/results?q=${query}`)
+      const asr = currentVideo?.currentVideo?.asr
+      const dsc = currentVideo?.currentVideo?.dsc
+      const resAsr = searchWordInSentences(asr,query,1)
+      const resDsc = searchWordInSentences(dsc,query,0)
+      setResultsAsr(resAsr)
+      setResultsDsc(resDsc)
     };
     return (
+        <>
       <div  style={Container_style}>
         <div style={Wrapper_style}>
           <div  class="search-container" style={Search_style}>
@@ -89,9 +124,50 @@ const size = {
               onClick={handleSearch}
             />
           </div>
-          {isUploadOpen && <Upload setOpen={setIsUploadOpen} />}
         </div>
       </div>
+      <>
+    {(resultsAsr.length === 0) ? (
+        <div>
+      </div>
+      ) : (
+        <>
+        <Typography>ASR</Typography>
+    <div className="root">
+      {[...Array(seconds)].map((_, index) => (
+        <div
+          key={index}
+          className="bar"
+          style={{
+            width: `${100/seconds}%`,
+            backgroundColor: getBarColorAsr(index + 1),
+          }}
+        />
+      ))}
+    </div> </>)}
+    </>
+    <>
+    {(resultsDsc.length === 0) ? (
+      <div>
+        
+      </div>
+      ) : (
+        <>
+        <Typography>DSC</Typography>
+    <div className="root">
+      {[...Array(seconds)].map((_, index) => (
+        <div
+          key={index}
+          className="bar"
+          style={{
+            width: `${100/seconds}%`,
+            backgroundColor: getBarColorDsc(index + 1,resultsAsr),
+          }}
+        />
+      ))}
+    </div></>)}
+    </>
+    </>
     );
   };
   

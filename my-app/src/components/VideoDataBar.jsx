@@ -4,6 +4,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { useSelector } from 'react-redux';
+import '../css/TabPanel.css'
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
@@ -35,7 +36,6 @@ export default function BasicTabs() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -44,7 +44,7 @@ export default function BasicTabs() {
           <Tab label="videoSegments" {...a11yProps(1)} />
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}>
+      <TabPanel value={value} index={0} className ="tab-panel">
         {currentVideo?.currentVideo?.vtt}
       </TabPanel>
       <TabPanel value={value} index={1}>

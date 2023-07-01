@@ -1,0 +1,6 @@
+.tab-panel{
+    overflow-wrap: break-word;
+    hyphens: manual;
+    max-height: 90vh;
+    overflow-y: scroll;
+}

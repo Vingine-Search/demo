@@ -29,9 +29,7 @@ const size = {
       position: 'sticky',
       top: 0,
       zIndex: 1,
-      // backgroundColor:'#181818',
-      // backgroundColor: 'rgb(236, 251, 251)',
-      backgroundColor: 'rgb(255, 253, 237)',
+      backgroundColor: 'rgb(243, 252, 252)',
       height: '80px',
     };
 
