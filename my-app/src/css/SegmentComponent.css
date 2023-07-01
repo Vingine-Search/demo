@@ -1,0 +1,12 @@
+.root{
+    width: 100%;
+    height: 20px;
+    background-color: "#ddd";
+    background-color: rgb(255, 255, 255);
+    border: 1px solid black;
+    margin-top: 10px;
+    display: flex;
+  }
+  .bar{
+    height: 100%;
+  }

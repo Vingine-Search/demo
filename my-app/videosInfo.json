@@ -64,33 +64,77 @@
     "info":[
         {
             "id": 1,
-            "title":" Vingine",
+            "title":" Vingine1",
             "duration": 300,
-            "scene_segments": [2,3,5,6],
-            "topic_segments": [3,4,6,7],
-            "asr": "what should  i do",
-            "dsc": "argument",
+            "scene_segments": [100,250,220,6],
+            "topic_segments": [100,250,220,6],
+            "asr": ["what should  i do","hey how are you","ohhhhhh","lets do it"],
+            "dsc": ["eating","playing","fighting","studying"],
             "vtt": "what should  i do"
         },
         {
             "id": 2,
-            "title":" Vingine",
-            "duration": 300,
-            "scene_segments": [2,3,5,6],
-            "topic_segments": [3,4,6,7],
-            "asr": "what should  i do",
-            "dsc": "argument",
+            "title":" Vingine2",
+            "duration": 500,
+            "scene_segments": [100,200,300,250],
+            "topic_segments":  [100,200,300,250],
+            "asr": ["what should  i do","hey how are you","ohhhhhh","lets do it"],
+            "dsc": ["eating","playing","fighting","studying"],
             "vtt": "what should  i do"
         },
         {
             "id": 3,
-            "title":" Vingine",
+            "title":" Vingine3",
+            "duration": 700,
+            "scene_segments": [30,100,500,600],
+            "topic_segments": [30,100,500,600],
+            "asr": ["what should  i do","hey how are you","ohhhhhh","lets do it"],
+            "dsc": ["eating","playing","fighting","studying"],
+            "vtt": "what should  i do"
+        },
+        {
+            "id": 4,
+            "title":" Vingine4",
             "duration": 300,
-            "scene_segments": [2,3,5,6],
-            "topic_segments": [3,4,6,7],
-            "asr": "what should  i do",
-            "dsc": "argument",
+            "scene_segments": [200,100,5,30],
+            "topic_segments": [200,100,5,30],
+            "asr": ["what should  i do","hey how are you","ohhhhhh","lets do it"],
+            "dsc": ["eating","playing","fighting","studying"],
+            "vtt": "what should  i do"
+        },
+        {
+            "id": 5,
+            "title":" Vingine5",
+            "duration": 300,
+            "scene_segments": [200,100,5,30],
+            "topic_segments":[200,100,5,30],
+            "asr": ["what should  i do","hey how are you","ohhhhhh","lets do it"],
+            "dsc": ["eating","playing","fighting","studying"],
+            "vtt": "what should  i do"
+        },
+        {
+            "id": 6,
+            "title":" Vingine6",
+            "duration": 1000,
+            "scene_segments": [200,100,700,400],
+            "topic_segments":[200,100,700,400],
+            "asr": ["what should  i do","hey how are you","ohhhhhh","lets do it"],
+            "dsc": ["eating","playing","fighting","studying"],
             "vtt": "what should  i do"
         }
+    ],
+    "download":[
+    {"id":1,
+    "video_url":"https://www.youtube.com/watch?v=ysz5S6PUM-U"},
+    {"id":2,
+    "video_url":"https://www.youtube.com/watch?v=ysz5S6PUM-U"},
+    {"id":3,
+    "video_url":"https://www.youtube.com/watch?v=ysz5S6PUM-U"},
+    {"id":4,
+    "video_url":"https://www.youtube.com/watch?v=ysz5S6PUM-U"},
+    {"id":5,
+    "video_url":"https://www.youtube.com/watch?v=ysz5S6PUM-U"},
+    {"id":6,
+    "video_url":"https://www.youtube.com/watch?v=ysz5S6PUM-U"}
     ]
 }
