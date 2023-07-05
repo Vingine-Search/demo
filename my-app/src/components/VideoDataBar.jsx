@@ -39,16 +39,20 @@ export default function BasicTabs() {
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="TransScript" {...a11yProps(0)} />
-          <Tab label="videoSegments" {...a11yProps(1)} />
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" TabIndicatorProps={{
+    style: {
+      backgroundColor: "rgb(124, 204, 139)"
+    }
+  }}>
+          <Tab label="TranScript" {...a11yProps(0)}  className='ta'/>
+          <Tab label="Keywords" {...a11yProps(1)} className='ta' />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0} className ="tab-panel">
         {currentVideo?.currentVideo?.vtt}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        videoSegments
+        Keywords
       </TabPanel>
     </Box>
   );

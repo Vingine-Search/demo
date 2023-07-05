@@ -4,3 +4,6 @@
     max-height: 90vh;
     overflow-y: scroll;
 }
+.ta{
+    color: rgb(124, 204, 139) !important;
+}

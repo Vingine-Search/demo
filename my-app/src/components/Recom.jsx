@@ -4,7 +4,6 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea, CardActions } from '@mui/material';
-import Grid from '@mui/material/Grid';
 export default function Recom({videoImg}) {
   return (
     <Card sx={{ maxWidth: 345 }}>

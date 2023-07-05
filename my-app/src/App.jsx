@@ -1,4 +1,3 @@
-
 import Navbar from "./components/NavBar";
 import Home from './pages/Home/Home';
 import Results from './pages/Results/Results';
@@ -9,7 +8,6 @@ function App() {
   // const [darkMode, setDarkMode] = useState(true);
   return (
     // <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-    
     <Router>
       <div className='app-main'>
         <Navbar />

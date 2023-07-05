@@ -1,11 +1,10 @@
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import { useNavigate } from "react-router-dom";
 import { useMemo } from "react";
 import { useState } from "react";
-import Upload from "./Upload.jsx";
 import { Typography } from "@mui/material";
 import '../css/NavBar.css';
 import { useSelector } from "react-redux";
+
 function searchWordInSentences(sentences, word,asr) {
     const result = [];
     console.log(sentences)
@@ -45,11 +44,7 @@ const size = {
     const Container_style = {
       position: 'sticky',
       top: 0,
-      zIndex: 1,
-      // backgroundColor:'#181818',
-      // backgroundColor: 'rgb(236, 251, 251)',
-    //   backgroundColor: 'rgb(255, 253, 237)',
-    backgroundColor:'rgb(243, 252, 252)',
+      backgroundColor:'rgb(230, 232, 232)',
       height: '80px',
     };
     const Wrapper_style = {
