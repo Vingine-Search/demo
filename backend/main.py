@@ -7,10 +7,20 @@ from fastapi.responses import FileResponse
 # Use baize's file response object since it's seekable.
 #from baize.asgi.responses import FileResponse
 from fastapi import FastAPI, UploadFile, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 
 
 api = FastAPI()
 vingine = Vingine(constants.SERVICE_BACKEND)
+
+api.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # Create the storage directory if it doesn't exist.
 if not os.path.exists(constants.STORAGE):
