@@ -2,3 +2,4 @@
 *.mov
 *.jpg
 __pycache__
+.trash

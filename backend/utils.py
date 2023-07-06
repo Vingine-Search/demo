@@ -3,6 +3,7 @@ import cv2
 import uuid
 import random
 import constants
+import numpy as np
 
 
 EXTS = [".mp4", ".mov"]
@@ -49,4 +50,7 @@ def store_thumbnail(path: str):
         _, frame = video.read()
     # Store the frame.
     jpg = path.split(".")[0] + ".jpg"
+    if frame is None:
+        # Default thumbnail.
+        frame = np.zeros((256, 256, 3))
     cv2.imwrite(jpg, frame)
