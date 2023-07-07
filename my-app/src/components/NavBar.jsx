@@ -80,6 +80,7 @@ const size = {
 
     const handleSearch = (e) => {
       if (!query) return;
+      console.log(query)
      navigate(`/results?q=${query}`)
     };
     return (
@@ -98,7 +99,6 @@ const size = {
               value={query}
               onKeyDown={(e) => e.key === 'Enter'  && handleSearch()}
             />
-
              <Button variant="contained" color="success" onClick={handleSearch}>
           Search
           </Button>

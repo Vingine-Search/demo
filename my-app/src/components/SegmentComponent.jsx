@@ -1,13 +1,14 @@
-import React from "react";
+// import React, { useEffect,useState } from "react";
 import '../css/SegmentComponent.css'
 import { Typography } from "@mui/material";
 import { useSelector } from 'react-redux';
 export default function SegmentComponent(){
   const currentVideo = useSelector(state=> state.video)
+  // const [coloredSeconds, setColoredSeconds] = useState('');
   const seconds = currentVideo?.currentVideo?.duration;
-  const coloredSeconds =currentVideo?.currentVideo?.scene_segments;
+  const coloredSeconds =  currentVideo?.coloredSeconds;
   const getBarColor = (second) => {
-    return coloredSeconds?.includes(second) ? "green" : "rgb(255, 255, 255)";
+    return coloredSeconds?.includes(String(second)) ? "green" : "rgb(255, 255, 255)";
   };
   return (<>
     {currentVideo?.loading ? (
@@ -17,7 +18,7 @@ export default function SegmentComponent(){
       ) : (
         // If the videoData prop is not an array or is an empty array, render a loading message or a placeholder component
     <div className="root">
-      {[...Array(seconds)].map((_, index) => (
+      {[...Array(Math.round(seconds))].map((_, index) => (
         <div
           key={index}
           className="bar"

@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
-
 const Img = styled('img')({
   margin: 'auto',
   display: 'block',
@@ -13,9 +12,11 @@ const Img = styled('img')({
   height: '100%',
   borderRadius:'5%',
 });
-export default function ComplexGrid({videoImg,videoUrl,videoId}){
+export default function ComplexGrid({videoImg,videoUrl,videoId,videoTitle,videoSType,from,to}){
     const navigate = useNavigate();
     const handleClick = (e) => {
+      // navigate(`/display?q=${videoId}&s=${videoSType}`);
+      console.log("idddddddddd",videoId)
       navigate(`/display?q=${videoId}`);
     };
   return (
@@ -34,20 +35,20 @@ export default function ComplexGrid({videoImg,videoUrl,videoId}){
           <ButtonBase sx={{ width: 250, height: 180 }}
           onClick={(e) => handleClick()}
           >
-            <Img alt="complex" src={videoImg}  />
+          <Img alt="complex" src={`http://grad-vm.westeurope.cloudapp.azure.com:8000/thumbnail/${videoImg}`}  />
           </ButtonBase>
         </Grid>
         <Grid item xs={12} sm container>
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
               <Typography gutterBottom variant="subtitle1" component="div">
-                Learn Vue
+              {videoTitle}
               </Typography>
               <Typography variant="body2" gutterBottom>
-                Full resolution 1920x1080 • JPEG
+                Hurry Up ! and look for what you need from {(from/60).toFixed(2)} to {(to/60).toFixed(2)} mins
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                ID: 1030114
+              {videoSType}
               </Typography>
             </Grid>
           </Grid>

@@ -17,8 +17,8 @@ const images = [
 const Home = () => {
   return (
   <Grid container spacing={2} columns={15} className='main-grid' justify="center">
-  {images.map((image) => (
-        <Grid item  xs={15} md={3} key={image.id}>
+  {images.map((image,i) => (
+        <Grid item  xs={15} md={3} key={i}>
           <MultiActionAreaCard videoImg={image.imgSource}/>
         </Grid>
       ))}

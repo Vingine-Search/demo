@@ -77,8 +77,6 @@ const size = {
       },
     },
   } ;
-
-
     const currentVideo = useSelector(state=> state.video)
     const seconds = currentVideo?.currentVideo?.duration;
     const [query, setQuery] = useState("");
@@ -97,7 +95,9 @@ const size = {
     const handleSearch = (e) => {
       if (!query) return;
       const asr = currentVideo?.currentVideo?.asr
+      console.log(asr)
       const dsc = currentVideo?.currentVideo?.dsc
+      console.log(dsc)
       const resAsr = searchWordInSentences(asr,query,1)
       const resDsc = searchWordInSentences(dsc,query,0)
       setResultsAsr(resAsr)
