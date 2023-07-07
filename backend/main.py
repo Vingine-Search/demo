@@ -2,12 +2,11 @@ import os
 import utils
 import aiofiles
 import constants
+from pathlib import Path
 from vingine import Vingine
 from fastapi.responses import FileResponse
-# Use baize's file response object since it's seekable.
-#from baize.asgi.responses import FileResponse
-from fastapi import FastAPI, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, UploadFile, HTTPException, Header, Response
 
 
 api = FastAPI()
@@ -56,10 +55,22 @@ async def upload(video: UploadFile, analysis: str, title: str):
         raise HTTPException(400, str(e))
 
 @api.get("/download/{id}")
-async def download(id: str):
-    """Sends the playable video to the client."""
-    path = await wrap_exception(utils.get_video_path, (id,), 404)
-    return FileResponse(path)
+async def download(id: str, range: str = Header(None)):
+    """Sends the playable video to the client.
+        Credits: https://github.com/stribny/fastapi-video/tree/master
+    """
+    path = Path(await wrap_exception(utils.get_video_path, (id,), 404))
+    start, end = range.replace("bytes=", "").split("-")
+    start = int(start) if start else 0
+    end = int(end) if end else start + 1024 * 1024
+    with open(path, "rb") as video:
+        video.seek(start)
+        data = video.read(end - start)
+        headers = {
+            'Content-Range': f'bytes {str(start)}-{str(end)}/{path.stat().st_size}',
+            'Accept-Ranges': 'bytes'
+        }
+    return Response(data, status_code=206, headers=headers, media_type="video/mp4")
 
 @api.get("/thumbnail/{id}")
 async def thumbnail(id: str):
