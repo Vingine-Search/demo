@@ -6,7 +6,7 @@ import argparse
 parser = argparse.ArgumentParser(description='Upload video to the demo backend.')
 parser.add_argument('--video', help='The path to the video file.', required=True)
 parser.add_argument('--title', help='The title of the video.', default="No Title")
-parser.add_argument('--analysis', help='The type of analysis to perform on the video.', default="video")
+parser.add_argument('--analysis', help='The type of analysis to perform on the video.', default="both")
 args = parser.parse_args()
 
 host = "http://grad-vm.westeurope.cloudapp.azure.com:8000"
