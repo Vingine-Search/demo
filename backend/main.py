@@ -32,9 +32,16 @@ async def wrap_exception(fn, args, code):
         raise HTTPException(code, f"{type(e)}: {e}")
 
 @api.get("/list")
-def all():
+async def all():
     """Lists all the videos we have."""
-    return utils.list_videos()
+    all_infos = []
+    for id in utils.list_videos():
+        try:
+            all_infos.append(await info(id))
+        except:
+            # Don't add info-less videos. (Videos failed analysis)
+            pass
+    return all_infos
 
 @api.post("/upload")
 async def upload(video: UploadFile, analysis: str, title: str):

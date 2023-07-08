@@ -1,7 +1,6 @@
 import os
 import cv2
 import uuid
-import random
 import constants
 import numpy as np
 
@@ -30,11 +29,9 @@ async def get_thumbnail_path(id: str) -> str:
     path = await get_video_path(id)
     return path.split(".")[0] + ".jpg"
 
-def list_videos() -> list:
+def list_videos() -> set:
     """Lists all the video IDs we have at no particular order."""
-    ids = [filename.split(".")[0] for filename in os.listdir(constants.STORAGE)]
-    random.shuffle(ids)
-    return ids
+    return set(filename.split(".")[0] for filename in os.listdir(constants.STORAGE))
 
 def store_thumbnail(path: str):
     video = cv2.VideoCapture(path)
