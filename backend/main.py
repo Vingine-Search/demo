@@ -1,5 +1,6 @@
 import os
 import utils
+import random
 import aiofiles
 import constants
 from pathlib import Path
@@ -35,9 +36,15 @@ async def wrap_exception(fn, args, code):
 async def all():
     """Lists all the videos we have."""
     all_infos = []
-    for id in utils.list_videos():
+    all_videos = list(utils.list_videos())
+    random.shuffle(all_videos)
+    for id in all_videos:
         try:
-            all_infos.append(await info(id))
+            vid_info = await info(id)
+            all_infos.append({
+                "id": id,
+                "title": vid_info["title"]
+            })
         except:
             # Don't add info-less videos. (Videos failed analysis)
             pass
