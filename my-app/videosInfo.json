@@ -118,7 +118,7 @@
             "duration": 1000,
             "scene_segments": [200,100,700,400],
             "topic_segments":[200,100,700,400],
-            "asr": ["what should  i do","hey how are you","ohhhhhh","lets do it"],
+            "asr": ["what should i do","hey how are you","ohhhhhh","lets do it"],
             "dsc": ["eating","playing","fighting","studying"],
             "vtt": "what should  i do"
         }

@@ -17,7 +17,13 @@ export default function ComplexGrid({videoImg,videoUrl,videoId,videoTitle,videoS
     const handleClick = (e) => {
       // navigate(`/display?q=${videoId}&s=${videoSType}`);
       console.log("idddddddddd",videoId)
-      navigate(`/display?q=${videoId}`);
+      navigate(`/display?q=${videoId}&from=${from}`);
+    };
+    const formatTime = seconds => {
+      const h = Math.floor(seconds / 3600);
+      const m = Math.floor((seconds % 3600) / 60);
+      const s = Math.floor(seconds % 60);
+      return `${h < 10 ? '0' + h : h}:${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
     };
   return (
     <Paper
@@ -45,7 +51,7 @@ export default function ComplexGrid({videoImg,videoUrl,videoId,videoTitle,videoS
               {videoTitle}
               </Typography>
               <Typography variant="body2" gutterBottom>
-                Hurry Up ! and look for what you need from {(from/60).toFixed(2)} to {(to/60).toFixed(2)} mins
+                Hurry Up ! and look for what you need from {formatTime(from)} to {formatTime(to)} mins
               </Typography>
               <Typography variant="body2" color="text.secondary">
               {videoSType}

@@ -1,5 +1,6 @@
 // import MultiActionAreaCard from '../../components/VideoCard'
 import { Grid } from '@mui/material';
+import { useRef } from 'react';
 import './Display.css'
 import BasicTabs from '../../components/VideoDataBar'
 import React from 'react'
@@ -15,6 +16,7 @@ import axios from 'axios';
 import { baseURL } from '../../api';
 import { fetchVideoInfoSuccess } from '../../redux/videoSlice';
 const Display = () => {
+
   const [videoUrl,setVideoUrl] = useState([]);
   const currentVideo = useSelector(state=> state.video)
   const [segmentType,setSegmentType] = useState([]);
@@ -22,17 +24,55 @@ const Display = () => {
   const location = useLocation();
   const dispatch = useDispatch()
   const query = location.search;
+  
+  const playerRef = useRef(null);
+  const searchParams = new URLSearchParams(query);
+  const id = searchParams.get('q');
+  console.log("idddddddddd",id);
+  const from = searchParams.get('from');
+  console.log("idddddddddd",from);
+
+  // const handlePlayerReady = () => {
+  //   if (playerRef.current) {
+  //     playerRef.current.seekTo(from);
+  //     playerRef.current.getInternalPlayer().playPause();
+  //   }
+  // };
+  const tracks = [
+    {
+      kind: 'subtitles',
+      src: `http://grad-vm.westeurope.cloudapp.azure.com:8000/vtt/${id}`,
+      srcLang: 'en',
+      default: true
+    }
+  ];
+  const formatTime = seconds => {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = Math.floor(seconds % 60);
+    return `${h < 10 ? '0' + h : h}:${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
+  };
+  const handlePlayerReady = React.useCallback(() => {
+    playerRef.current.seekTo(from, 'seconds');
+  }, []);
   // const dispatch = useDispatch()
   useEffect(() => {
+
     console.log("queryyyy from display :", query);
     const fetchVideoData = async () => {
       try {
         const searchParams = new URLSearchParams(query);
         const id = searchParams.get('q');
         console.log("idddddddddd",id);
+        const from = searchParams.get('from');
+        console.log("idddddddddd",from);
         const segment_type = searchParams.get('s');
         setSegmentType(segment_type)
         console.log(segment_type)
+        // if(playerRef.current){
+        //   playerRef?.current?.seekTo(from); // start playing from 30th second
+        //   playerRef?.current?.play();
+        // }
         // setVideoUrl(`http://grad-vm.westeurope.cloudapp.azure.com:8000/download/${id}`)
         // dispatch(
         //       fetchVideoInfoSuccess({
@@ -48,16 +88,19 @@ const Display = () => {
              const coloredSeconds_ob =response.data?.scene_segments;
              const toValues = coloredSeconds_ob?.map(obj => obj.to); // extract "to" values
              const coloredSeconds = toValues?.reduce((acc, val) => acc.concat(val), []);
+             const coloredSeconds_c = coloredSeconds.map(formatTime)
              const coloredSeconds_obt =response.data?.topic_segments;
              const toValues_T = coloredSeconds_obt?.map(obj => obj.to); // extract "to" values
              const coloredSeconds_T = toValues_T?.reduce((acc, val) => acc.concat(val), []);
+             const coloredSeconds_T_c = coloredSeconds_T.map(formatTime)
             dispatch(
               fetchVideoInfoSuccess({
                 currentVideo:response.data,
-                coloredSeconds: coloredSeconds,
-                coloredSeconds_T: coloredSeconds_T,
+                coloredSeconds: coloredSeconds_c,
+                coloredSeconds_T: coloredSeconds_T_c,
                 loading:false
               }))
+
           });
       } catch (error) {
         console.log(error.response.data);
@@ -71,14 +114,27 @@ const Display = () => {
         <div>
         <Typography>Loading...</Typography>
       </div>
-      ) : (
+      ): (
   <Grid container spacing={2} columns={12} className='main-grid' justify="center">
         <Grid item sm={12} md={6}>
         <ReactPlayer 
+           ref={playerRef}
            controls = 'true'
            width = '100%'
            height='300px'
-           url={videoUrl} />
+           url={videoUrl} 
+           onStart={handlePlayerReady}
+           playing = 'true'
+           config = {{
+           file: {
+          tracks,
+          attributes: {
+            crossorigin: 'anonymous'
+          }
+              }
+          }}
+          
+           />
            <SegmentComponent  />
            <Typography gutterBottom variant="h5" component="div" className='s-t'>
            Search Inside The Video

@@ -2,17 +2,23 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { useMemo } from "react";
 import { useState } from "react";
 import { Typography } from "@mui/material";
+import BasicTabs_D_A from "./BasicTabs_D_A";
 import '../css/NavBar.css';
 import { useSelector } from "react-redux";
-
+const formatTime = seconds => {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = Math.floor(seconds % 60);
+  return `${h < 10 ? '0' + h : h}:${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
+};
 function searchWordInSentences(sentences, word,asr) {
     const result = [];
     console.log(sentences)
     for (let i = 0; i < sentences?.length; i++) {
       if (sentences[i].indexOf(word) !== -1) {
         if (asr === 1)
-        result.push(i+1);
-        else  result.push((i+1)*5);
+        result.push(formatTime(i+1));
+        else  result.push(formatTime((i+1)*5));
       }
     }
     console.log(result)
@@ -80,18 +86,18 @@ const size = {
     const currentVideo = useSelector(state=> state.video)
     const seconds = currentVideo?.currentVideo?.duration;
     const [query, setQuery] = useState("");
-    const [resultsAsr,setResultsAsr] = useState([]);
-    const [resultsDsc,setResultsDsc] = useState([]);
+    const [resAsr,setResultsAsr] = useState([]);
+    const [resDsc,setResultsDsc] = useState([]);
     const getBarColorDsc = useMemo(() => {
         return (second) => {
-          return resultsDsc.includes(second) ? "green" : "rgb(255, 255, 255)";
+          return resDsc.includes(second) ? "green" : "rgb(255, 255, 255)";
         };
-      }, [resultsDsc]);
+      }, [resDsc]);
       const getBarColorAsr = useMemo(() => {
         return (second) => {
-          return resultsAsr.includes(second) ? "green" : "rgb(255, 255, 255)";
+          return resAsr.includes(second) ? "green" : "rgb(255, 255, 255)";
         };
-      }, [resultsAsr]);
+      }, [resAsr]);
     const handleSearch = (e) => {
       if (!query) return;
       const asr = currentVideo?.currentVideo?.asr
@@ -103,6 +109,7 @@ const size = {
       setResultsAsr(resAsr)
       setResultsDsc(resDsc)
     };
+
     return (
         <>
       <div  style={Container_style}>
@@ -122,45 +129,24 @@ const size = {
         </div>
       </div>
       <>
-    {(resultsAsr.length === 0) ? (
-        <div>
+    {(resAsr.length === 0) ? (
+      <div>
       </div>
       ) : (
         <>
-        <Typography>ASR</Typography>
-    <div className="root">
-      {[...Array(seconds)].map((_, index) => (
-        <div
-          key={index}
-          className="bar"
-          style={{
-            width: `${100/seconds}%`,
-            backgroundColor: getBarColorAsr(index + 1),
-          }}
-        />
-      ))}
-    </div> </>)}
+      
+     </>)}
     </>
     <>
-    {(resultsDsc.length === 0) ? (
+    {(resDsc.length === 0) ? (
       <div>
         
       </div>
       ) : (
         <>
-        <Typography>DSC</Typography>
-    <div className="root">
-      {[...Array(seconds)].map((_, index) => (
-        <div
-          key={index}
-          className="bar"
-          style={{
-            width: `${100/seconds}%`,
-            backgroundColor: getBarColorDsc(index + 1,resultsAsr),
-          }}
-        />
-      ))}
-    </div></>)}
+        
+    </>)}
+    <BasicTabs_D_A resDsc={resDsc}  resAsr={resAsr}/>
     </>
     </>
     );

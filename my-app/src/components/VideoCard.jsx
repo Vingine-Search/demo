@@ -4,22 +4,22 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea, CardActions } from '@mui/material';
-export default function MultiActionAreaCard({videoImg}) {
+export default function MultiActionAreaCard({videoImg,videoTitle}) {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345, minHeight:345 }}>
       <CardActionArea>
         <CardMedia
           component="img"
           height="120"
-          image={videoImg}
+          image={`http://grad-vm.westeurope.cloudapp.azure.com:8000/thumbnail/${videoImg}`}
           alt="green iguana"
-                  />
+          />
         <CardContent>
           <Typography gutterBottom variant="h6" component="div">
-            Learn Vue
+            {videoTitle}
           </Typography>
           <Typography gutterBottom variant="h7" component="div">
-            Learn Vue
+          {videoTitle}
           </Typography>
         </CardContent>
       </CardActionArea>
