@@ -48,6 +48,8 @@ async def all():
         except:
             # Don't add info-less videos. (Videos failed analysis)
             pass
+        if len(all_infos) > 20:
+            break
     return all_infos
 
 @api.post("/upload")
