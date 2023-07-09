@@ -60,3 +60,9 @@ class Vingine:
         if response.is_error:
             raise RuntimeError(f"Vingine Search Error: {response.json().get('detail')}")
         return response.json()
+
+    async def vtt(self, id: str):
+        response = await self.client.get(self.url + '/vtt', params={'id': id})
+        if response.is_error:
+            raise RuntimeError(f"Vingine VTT Fetch Error: {response.json().get('detail')}")
+        return response.json()

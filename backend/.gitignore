@@ -1,5 +1,6 @@
 *.mp4
 *.mov
 *.jpg
+*.vtt
 __pycache__
 .trash

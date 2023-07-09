@@ -88,6 +88,15 @@ async def download(id: str, range: str = Header(None)):
         }
     return Response(data, status_code=206, headers=headers, media_type="video/mp4")
 
+@api.get("/vtt/{id}")
+async def vtt(id: str):
+    path = await wrap_exception(utils.get_vtt_path, (id,), 404)
+    # If we don't have that vtt file, fetch it from vingine.
+    if not os.path.exists(path):
+        vtt_content = await wrap_exception(vingine.vtt, (id,), 500)
+        open(path, 'w').write(vtt_content)
+    return FileResponse(path)
+
 @api.get("/thumbnail/{id}")
 async def thumbnail(id: str):
     path = await wrap_exception(utils.get_thumbnail_path, (id,), 404)

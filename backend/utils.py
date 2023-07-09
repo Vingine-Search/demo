@@ -29,6 +29,10 @@ async def get_thumbnail_path(id: str) -> str:
     path = await get_video_path(id)
     return path.split(".")[0] + ".jpg"
 
+async def get_vtt_path(id: str) -> str:
+    path = await get_video_path(id)
+    return path.split(".")[0] + ".vtt"    
+
 def list_videos() -> set:
     """Lists all the video IDs we have at no particular order."""
     return set(filename.split(".")[0] for filename in os.listdir(constants.STORAGE))
